@@ -4,7 +4,7 @@ import { MessageCircleMore, StoreIcon, HomeIcon, User, TentTreeIcon} from "lucid
 
 export default function Navbar () {
     return (
-        <div className="h-24 bg-gray-100 grid grid-cols-5 justify-items-center content-center inset-x-0 rounded-4xl shadow-lg">
+        <div className="h-24 bg-gray-100 grid grid-cols-5 justify-items-center content-center fixed bottom-8 rounded-4xl shadow-lg w-96">
             <div className="flex justify-center items-center hover:scale-120 duration-200">
                 <Link to="" className="font-semibold text-gray-600">
                     <TentTreeIcon className="size-6 text-gray-500 justify-self-center" />
