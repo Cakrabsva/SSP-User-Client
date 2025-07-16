@@ -1,4 +1,5 @@
 import { User, Mail, KeyRound, RotateCcwKey, CircleArrowLeft } from "lucide-react"
+import { Link } from 'react-router-dom';
 import "../index.css"
 
 export default function Register () {
@@ -11,13 +12,15 @@ export default function Register () {
             relative">
             <div className="px-6">
                 <div className="flex justify-between items-center">
-                    <a href="">
+                    <Link to='/'>
                         <CircleArrowLeft className="size-11 text-black hover:scale-105 transition-all duration-300" />
-                    </a>
-                    <a  
-                        href=""
-                        className="text-xl font-bold hover:scale-105 transition-all duration-300">
-                    Login</a>
+                    </Link>
+                    <Link to='/login'>
+                        <p  
+                            href=""
+                            className="text-xl font-bold hover:scale-105 transition-all duration-300">
+                        Login</p>
+                    </Link>
                 </div>
                 <div className="mt-12 space-y-3">
                     <p className="text-4xl font-bold">Register</p>
