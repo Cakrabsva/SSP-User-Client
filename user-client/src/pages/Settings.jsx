@@ -1,4 +1,4 @@
-import { Bug, ChevronRight, CircleArrowLeft, Headset, Mail, RectangleEllipsis, Send, TriangleAlert, UserRound, UserRoundPen } from "lucide-react";
+import { ChevronRight, CircleArrowLeft, Headset, Mail, RectangleEllipsis, Send, TriangleAlert, UserRound, UserRoundPen } from "lucide-react";
 import "../index.css"
 import { Link } from 'react-router-dom';
 
@@ -32,33 +32,39 @@ export default function Settings () {
                         <ChevronRight className="text-gray-700" />
                     </div>
                 </div>
-                <div className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
-                    <div className="flex space-x-4">
-                        <Mail className="size-7 text-gray-700" />
-                        <p className="font-semibold text-gray-700">Change Email</p>
+                <Link to='/change-email'>
+                    <div className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
+                        <div className="flex space-x-4">
+                            <Mail className="size-7 text-gray-700" />
+                            <p className="font-semibold text-gray-700">Change Email</p>
+                        </div>
+                        <div className="justify-items-end">
+                            <ChevronRight className="text-gray-700" />
+                        </div>
                     </div>
-                    <div className="justify-items-end">
-                        <ChevronRight className="text-gray-700" />
+                </Link>
+                <Link to='/change-username'>
+                    <div className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
+                        <div className="flex space-x-4">
+                            <UserRoundPen className="size-7 text-gray-700" />
+                            <p className="font-semibold text-gray-700">Change Username</p>
+                        </div>
+                        <div className="justify-items-end">
+                            <ChevronRight className="text-gray-700" />
+                        </div>
                     </div>
-                </div>
-                <div className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
-                    <div className="flex space-x-4">
-                        <UserRoundPen className="size-7 text-gray-700" />
-                        <p className="font-semibold text-gray-700">Change Username</p>
+                </Link>
+                <Link to='/change-password'>
+                    <div className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
+                        <div className="flex space-x-4">
+                            <RectangleEllipsis className="size-7 text-gray-700" />
+                            <p className="font-semibold text-gray-700">Change Password</p>
+                        </div>
+                        <div className="justify-items-end">
+                            <ChevronRight className="text-gray-700" />
+                        </div>
                     </div>
-                    <div className="justify-items-end">
-                        <ChevronRight className="text-gray-700" />
-                    </div>
-                </div>
-                <div className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
-                    <div className="flex space-x-4">
-                        <RectangleEllipsis className="size-7 text-gray-700" />
-                        <p className="font-semibold text-gray-700">Change Password</p>
-                    </div>
-                    <div className="justify-items-end">
-                        <ChevronRight className="text-gray-700" />
-                    </div>
-                </div>
+                </Link>
             </div>
             <div className="px-6">
                 <p className="mt-8 text-lg font-semibold">

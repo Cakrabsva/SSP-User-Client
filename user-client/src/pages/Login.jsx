@@ -53,7 +53,7 @@ export default function Login () {
                         />
                     </div>
                     <div className="flex justify-end">
-                        <Link className="font-semibold" to=''>Forgot Password?</Link>
+                        <Link className="font-semibold" to='/forgot-password'>Forgot Password?</Link>
                     </div>
                     <button 
                         href=""
