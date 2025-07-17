@@ -1,6 +1,7 @@
 import "../index.css"
 import logo from "../assets/sunowlnew.png"
 import { Link } from 'react-router-dom';
+import { CircleArrowLeft, HomeIcon } from "lucide-react";
 
 export default function LoginRegister () {
     return (
@@ -10,13 +11,21 @@ export default function LoginRegister () {
             mx-auto 
             bg-white
             relative">
-            <div className="flex justify-center mt-6">
-                <img src={logo} alt="Sunowl logo" width="350" height="auto" />
+            <div className="px-6">
+                <div className="flex justify-start items-center">
+                    <Link to='/'>
+                        <HomeIcon className="size-8 text-gray-700 hover:scale-105 transition-all duration-300" />
+                    </Link>
+                </div>
             </div>
-            <div className="bg-yellow-500 h-93 py-16 px-6 rounded-b-4xl rounded-t-[48px] absolute inset-x-0">
+            <div className="flex justify-center mt-6">
+                <img src={logo} alt="Sunowl logo" width="300" height="auto" />
+            </div>
+
+            <div className="bg-yellow-500 h-93 py-16 px-6 rounded-b-4xl rounded-t-[48px] absolute bottom-0 inset-x-0">
                 <div className="space-y-3 font-sans text-justify">
-                    <h1 className="text-3xl font-extrabold flex items-center">Welcome</h1>
-                    <p className="font-semibold">Selamat datang di Sunowl Stories, untuk menikmati semua fitur di website ini silahkan Login dulu ya, kalau kamu belum punya akun yuk silahkan Register dulu.</p>
+                    <h1 className="text-3xl font-bold flex items-center">Welcome</h1>
+                    <p className="">Selamat datang di Sunowl Stories, untuk menikmati semua fitur di website ini silahkan Login dulu ya, kalau kamu belum punya akun yuk silahkan Register dulu.</p>
                 </div>
                 <div className="flex justify-center space-x-8 mt-12">
                     <Link 

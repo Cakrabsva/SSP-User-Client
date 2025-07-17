@@ -13,7 +13,7 @@ export default function PromotionSlider() {
   })
 
   return (
-    <div ref={sliderRef} className="keen-slider ">
+    <div ref={sliderRef} className="keen-slider relative z-0">
         <div className="keen-slider__slide flex items-center justify-center">
             <img className="rounded-3xl" src={sampleImport1} alt="" />
         </div>

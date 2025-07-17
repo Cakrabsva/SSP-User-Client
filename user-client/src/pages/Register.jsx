@@ -12,7 +12,7 @@ export default function Register () {
             relative">
             <div className="px-6">
                 <div className="flex justify-between items-center">
-                    <Link to='/'>
+                    <Link to='/login-register'>
                         <CircleArrowLeft className="size-11 text-black hover:scale-105 transition-all duration-300" />
                     </Link>
                     <Link to='/login'>

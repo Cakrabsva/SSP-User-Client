@@ -12,7 +12,7 @@ export default function Login () {
             relative">
             <div className="px-6">
                 <div className="flex justify-between items-center">
-                    <Link to='/'>
+                    <Link to='/login-register'>
                         <CircleArrowLeft className="size-11 text-black hover:scale-105 transition-all duration-300" />
                     </Link>
                     <Link to='/register'>
@@ -51,6 +51,9 @@ export default function Login () {
                             placeholder="Password"
                             className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                         />
+                    </div>
+                    <div className="flex justify-end">
+                        <Link className="font-semibold" to=''>Forgot Password?</Link>
                     </div>
                     <button 
                         href=""
