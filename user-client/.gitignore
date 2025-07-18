@@ -25,3 +25,5 @@ dist-ssr
 
 #my .gitignore
 notes
+.env
+

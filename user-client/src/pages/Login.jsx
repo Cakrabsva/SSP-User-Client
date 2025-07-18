@@ -16,9 +16,7 @@ export default function Login () {
                         <CircleArrowLeft className="size-11 text-black hover:scale-105 transition-all duration-300" />
                     </Link>
                     <Link to='/register'>
-                        <p  
-                            href=""
-                            className="text-xl font-bold hover:scale-105 transition-all duration-300">
+                        <p className="text-xl font-bold hover:scale-105 transition-all duration-300">
                         Register</p>
                     </Link>
                 </div>
@@ -55,9 +53,7 @@ export default function Login () {
                     <div className="flex justify-end">
                         <Link className="font-semibold" to='/forgot-password'>Forgot Password?</Link>
                     </div>
-                    <button 
-                        href=""
-                        className="w-full text-center bg-black text-white font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
+                    <button className="w-full text-center bg-black text-white font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
                     Login</button>
                 </form>
             </div>

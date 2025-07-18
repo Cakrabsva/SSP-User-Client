@@ -1,8 +1,77 @@
-import { User, Mail, KeyRound, RotateCcwKey, CircleArrowLeft } from "lucide-react"
-import { Link } from 'react-router-dom';
 import "../index.css"
+import Swal from 'sweetalert2';
+import { User, Mail, KeyRound, RotateCcwKey, CircleArrowLeft, EyeOff, Eye } from "lucide-react"
+import { Link, useNavigate } from 'react-router-dom';
+import {  useState } from "react";
+import { useDispatch } from "react-redux";
+import { onRegister } from "../features/dispatch-function/userSlice";
 
 export default function Register () {
+
+    const [form, setform] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [eyePass, setEyePass] =useState(false)
+    const [eyeConfirmPass, setEyeConfirmPass] =useState(false)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleChangeForm = (e) => {
+        const {name, value} = e.target
+        setform((prev)=>({...prev, [name]:value.replace(/\s/g, '')}))
+    }
+
+    const handleChangeConfirmPassword = (e) => { 
+        setConfirmPassword(e.target.value.replace(/\s/g, ''))
+    }
+    
+    const handleOnRegister = async (e) => {
+        e.preventDefault()
+        if(form.password !== confirmPassword) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Password Mismatch!",
+                confirmButtonText: 'Oke',
+            })
+            return
+        }
+
+        try {
+            dispatch(onRegister(form))
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+                Toast.fire({
+                icon: "success",
+                title: "Register Successfully"
+            });
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: err.message,
+                confirmButtonText: 'Oke',
+            })
+        }
+        setConfirmPassword('')
+        setform(()=>({username:'', email:'', password:''}))
+        navigate('/login')
+        console.log(form, confirmPassword)
+    }
+
+    // useEffect (()=> {
+        
+    // })
+
+
     return (
         <div className="
             max-w-[411px] min-w-[375px] h-screen py-8
@@ -16,9 +85,7 @@ export default function Register () {
                         <CircleArrowLeft className="size-11 text-black hover:scale-105 transition-all duration-300" />
                     </Link>
                     <Link to='/login'>
-                        <p  
-                            href=""
-                            className="text-xl font-bold hover:scale-105 transition-all duration-300">
+                        <p className="text-xl font-bold hover:scale-105 transition-all duration-300">
                         Login</p>
                     </Link>
                 </div>
@@ -30,6 +97,7 @@ export default function Register () {
             <div className="bg-white py-16 px-6 rounded-t-[48px] absolute bottom-0 inset-x-0">
                 <form 
                     action=""
+                    onSubmit={handleOnRegister}
                     className="space-y-3 font-sans text-justify">
                     <div className="relative w-full">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -38,6 +106,16 @@ export default function Register () {
                         <input 
                             type="text"
                             placeholder="Username"
+                            id="username"
+                            name="username"
+                            value={form.username}
+                            defaultValue=''
+                            onChange={handleChangeForm}
+                            onKeyDown={(e) => {
+                                if (e.key === ' ') e.preventDefault();
+                            }}
+                            autoComplete="off"
+                            required
                             className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                         />
                     </div>
@@ -46,8 +124,15 @@ export default function Register () {
                             <Mail className="h-5 w-5 text-gray-400" />
                         </div>
                         <input 
-                            type="text"
+                            type="email"
                             placeholder="Email"
+                            id="email"
+                            name="email"
+                            value={form.email}
+                            defaultValue=''
+                            onChange={handleChangeForm}
+                            autoComplete="off"
+                            required
                             className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                         />
                     </div>
@@ -56,25 +141,48 @@ export default function Register () {
                             <KeyRound className="h-5 w-5 text-gray-400" />
                         </div>
                         <input 
-                            type="text"
+                            type= {!eyePass ? 'password' : 'text'}
                             placeholder="Password"
+                            id="password"
+                            name="password"
+                            value={form.password}
+                            onChange={handleChangeForm}
+                            onKeyDown={(e) => {
+                                if (e.key === ' ') e.preventDefault();
+                            }}
+                            autoComplete="off"
+                            required
                             className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                         />
+                        <a onMouseDown={() => setEyePass(!eyeConfirmPass)} onMouseLeave={() => setEyePass(false)} className="absolute inset-y-0 right-0 pr-5 flex items-center cursor-pointer">
+                            {!eyePass ? <EyeOff className="text-gray-400 size-5"/> : <Eye className="text-gray-400 size-5"/>}
+                        </a>
                     </div>
                     <div className="relative w-full">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <RotateCcwKey className="h-5 w-5 text-gray-400" />
                         </div>
                         <input 
-                            type="text"
+                            type={!eyeConfirmPass ? 'password' : 'text'}
                             placeholder="Confirm Password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={confirmPassword}
+                            onChange={handleChangeConfirmPassword}
+                            onKeyDown={(e) => {
+                                if (e.key === ' ') e.preventDefault();
+                            }}
+                            autoComplete="off"
+                            required
                             className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                         />
+                        <a onMouseDown={() => setEyeConfirmPass(!eyeConfirmPass)} onMouseLeave={() => setEyeConfirmPass(false)} className="absolute inset-y-0 right-0 pr-5 flex items-center cursor-pointer">
+                            {!eyeConfirmPass ? <EyeOff className="text-gray-400 size-5"/> : <Eye className="text-gray-400 size-5"/>}
+                        </a>
+                        
                     </div>
-                    <button 
-                        href=""
-                        className="w-full text-center bg-black text-white font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
-                    Register</button>
+                    <button type="submit" className="w-full text-center bg-black text-white font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
+                        Register</button>
                 </form>
             </div>
         </div>
