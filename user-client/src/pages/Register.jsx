@@ -8,7 +8,7 @@ import { onRegister } from "../features/dispatch-function/userSlice";
 
 export default function Register () {
 
-    const [form, setform] = useState('')
+    const [form, setform] = useState({username:'', email:'', password:''})
     const [confirmPassword, setConfirmPassword] = useState('')
     const [eyePass, setEyePass] =useState(false)
     const [eyeConfirmPass, setEyeConfirmPass] =useState(false)
@@ -35,36 +35,12 @@ export default function Register () {
             })
             return
         }
-
-        try {
-            dispatch(onRegister(form))
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-                Toast.fire({
-                icon: "success",
-                title: "Register Successfully"
-            });
-        } catch (err) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: err.message,
-                confirmButtonText: 'Oke',
-            })
+        const response = await dispatch(onRegister(form))
+        if(response) {
+            navigate('/login')
         }
         setConfirmPassword('')
         setform(()=>({username:'', email:'', password:''}))
-        navigate('/login')
-        console.log(form, confirmPassword)
     }
 
     // useEffect (()=> {
@@ -109,7 +85,6 @@ export default function Register () {
                             id="username"
                             name="username"
                             value={form.username}
-                            defaultValue=''
                             onChange={handleChangeForm}
                             onKeyDown={(e) => {
                                 if (e.key === ' ') e.preventDefault();
@@ -129,7 +104,6 @@ export default function Register () {
                             id="email"
                             name="email"
                             value={form.email}
-                            defaultValue=''
                             onChange={handleChangeForm}
                             autoComplete="off"
                             required
@@ -154,7 +128,7 @@ export default function Register () {
                             required
                             className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                         />
-                        <a onMouseDown={() => setEyePass(!eyeConfirmPass)} onMouseLeave={() => setEyePass(false)} className="absolute inset-y-0 right-0 pr-5 flex items-center cursor-pointer">
+                        <a onMouseDown={() => setEyePass(!eyePass)} onMouseLeave={() => setEyePass(false)} className="absolute inset-y-0 right-0 pr-5 flex items-center cursor-pointer">
                             {!eyePass ? <EyeOff className="text-gray-400 size-5"/> : <Eye className="text-gray-400 size-5"/>}
                         </a>
                     </div>
