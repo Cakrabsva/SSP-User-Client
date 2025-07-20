@@ -83,11 +83,11 @@ export default function Login () {
                             id="password"
                             name="password"
                             value={form.password}
+                            placeholder="Password"
                             onChange={handleChangeForm}
                             onKeyDown={(e) => {
                                 if (e.key === ' ') e.preventDefault();
                             }}
-                            placeholder="Password"
                             autoComplete="off"
                             required
                             className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
