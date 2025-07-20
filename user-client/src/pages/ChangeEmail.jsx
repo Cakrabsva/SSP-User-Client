@@ -1,8 +1,34 @@
 import "../index.css"
-import { CircleArrowLeft, KeyRound, Mail, RotateCcwKey, User } from "lucide-react"
-import { Link } from 'react-router-dom';
+import { CircleArrowLeft, Eye, EyeOff, KeyRound, Mail, RotateCcwKey, User } from "lucide-react"
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
+import { onUpdateEmail } from "../features/dispatch-function/userSlice";
 
 export default function ChangeEmail () {
+
+    const [form, setForm] = useState({email:'', password:''})
+    const [eye, setEye] = useState(false)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const handleOnChangeForm = (e) => {
+        const {name, value} = e.target
+        setForm((prev)=>({...prev, [name]: value.replace(/\s/g, '')}))
+    }
+
+    const handleOnSubmit = async (e) => {
+        e.preventDefault()
+        const response = await dispatch(onUpdateEmail(form))
+        if(response) {
+            navigate('/settings')
+            setForm({email:'', password:''})
+            return
+        } else {
+            setForm({email:form.email, password:''})
+        }
+    }
+
     return (
         <div className="
             max-w-[411px] min-w-[375px] h-screen py-8
@@ -22,6 +48,7 @@ export default function ChangeEmail () {
                 <div>
                     <form 
                         action=""
+                        onSubmit={handleOnSubmit}
                         className="space-y-3 font-sans text-justify">
                         
                         <div className="relative w-full mt-10">
@@ -29,7 +56,16 @@ export default function ChangeEmail () {
                                 <Mail className="h-5 w-5 text-gray-400" />
                             </div>
                             <input 
-                                type="text"
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={form.email}
+                                onChange={handleOnChangeForm}
+                                onKeyDown={(e) => {
+                                    if (e.key === ' ') e.preventDefault();
+                                }}
+                                autoComplete="off"
+                                required
                                 placeholder="New Email"
                                 className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                             />
@@ -39,13 +75,25 @@ export default function ChangeEmail () {
                                 <KeyRound className="h-5 w-5 text-gray-400" />
                             </div>
                             <input 
-                                type="text"
+                                type={eye ? 'text' : 'password'}
+                                id="password"
+                                name="password"
+                                value={form.password}
+                                onChange={handleOnChangeForm}
+                                onKeyDown={(e) => {
+                                    if (e.key === ' ') e.preventDefault();
+                                }}
+                                autoComplete="off"
+                                required
                                 placeholder="Password"
                                 className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                             />
+                            <a onMouseDown={() => setEye(!eye)} onMouseLeave={() => setEye(false)} className="absolute inset-y-0 right-0 pr-5 flex items-center cursor-pointer">
+                                {!eye ? <EyeOff className="text-gray-400 size-5"/> : <Eye className="text-gray-400 size-5"/>}
+                            </a>
                         </div>
                         <button 
-                            href=""
+                            type="submit"
                             className="w-full text-center bg-yellow-400 font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
                             Confirm
                         </button>

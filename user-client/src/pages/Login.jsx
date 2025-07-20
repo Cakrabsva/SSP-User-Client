@@ -7,7 +7,7 @@ import { onLogin } from "../features/dispatch-function/userSlice";
 
 export default function Login () {
 
-    const [form, setform] = useState({emailUsername:'', password:''})
+    const [form, setForm] = useState({emailUsername:'', password:''})
     const [eye, setEye] = useState('')
 
     const navigate = useNavigate()
@@ -15,7 +15,7 @@ export default function Login () {
 
     const handleChangeForm = (e) => {
         const {name, value} = e.target
-        setform((prev)=>({...prev, [name]: value.replace(/\s/g, '')}))
+        setForm((prev)=>({...prev, [name]: value.replace(/\s/g, '')}))
     }
     
     const handleOnLogin = async (e) => {
@@ -24,7 +24,7 @@ export default function Login () {
         if(response) {
             navigate('/')
         }
-        setform({emailUsername:'', password:''})
+        setForm({emailUsername:'', password:''})
     }
 
     return (
@@ -97,7 +97,7 @@ export default function Login () {
                         </a>
                     </div>
                     <div className="flex justify-end">
-                        <Link className="font-semibold" to='/forgot-password'>Forgot Password?</Link>
+                        <Link className="font-semibold hover:scale-105 hover:text-red-700 duration-300" to='/forgot-password'>Forgot Password?</Link>
                     </div>
                     <button type="submit" className="w-full text-center bg-black text-white font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
                     Login</button>
