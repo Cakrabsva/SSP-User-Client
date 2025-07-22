@@ -124,7 +124,6 @@ export const onUpdateEmail = (form) => {
 
 export const onUpdatePassword = (form) => {
     return async () => {
-
         try {
             const userId = localStorage.getItem("id")
             const token = localStorage.getItem("token")
@@ -151,6 +150,46 @@ export const onUpdatePassword = (form) => {
                 title: updateStatus.data.message
             });
         return updateStatus
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: err.response?.data?.message,
+                confirmButtonText: 'Oke',
+            })
+        }
+    }
+}
+
+export const onUpdateUsername = (form) => {
+    return async () => {
+        try {
+            const userId = localStorage.getItem("id")
+            const token = localStorage.getItem("token")
+
+            const updateStatus = await sspApi.post(`/user/${userId}/change-username`, form, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: updateStatus.data.message
+            });
+            return updateStatus
         } catch (err) {
             Swal.fire({
                 icon: "error",

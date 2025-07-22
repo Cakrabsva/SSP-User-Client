@@ -28,7 +28,6 @@ export default function ChangePassword () {
         navigate('/')
         setForm({oldPassword:'', newPassword:'', confirmPassword:''})
        }
-        
     }
 
     return (
