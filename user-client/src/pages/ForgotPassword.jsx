@@ -29,13 +29,12 @@ export default function ForgotPassword () {
                                 <Mail className="h-5 w-5 text-gray-400" />
                             </div>
                             <input 
-                                type="text"
+                                type="email"
                                 placeholder="Email"
                                 className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                             />
                         </div>
                         <button 
-                            href=""
                             className="w-full text-center bg-yellow-400 font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
                             Reset Password
                         </button>

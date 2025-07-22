@@ -201,4 +201,42 @@ export const onUpdateUsername = (form) => {
     }
 }
 
+export const onResetPassword = (form) => {
+    return async () => {
+        try {
+            const userId = localStorage.getItem("id")
+
+            const updateStatus = await sspApi.post(`/user/${userId}/reset-password`, form, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                }
+            })
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: updateStatus.data.message
+            });
+            return updateStatus
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: err.response?.data?.message,
+                confirmButtonText: 'Oke',
+            })
+        }
+    }
+}
+
 export default userSlice.reducer
