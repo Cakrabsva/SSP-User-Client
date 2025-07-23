@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { sspApi } from "../../helpers/http-clients";
 import Swal from 'sweetalert2';
-import { fetchGlobalData } from "../global-data/globalData";
 const userSlice = createSlice ({
     name: "user-slice",
     initialState: {},
@@ -27,7 +26,7 @@ export const onRegister = (form) => {
                     toast.onmouseleave = Swal.resumeTimer;
                 }
             });
-                Toast.fire({
+            Toast.fire({
                 icon: "success",
                 title: response.data.message
             });
@@ -43,8 +42,8 @@ export const onRegister = (form) => {
     }
 }
 
-export const onLogin = (form) => {
-    return async (dispacth) => {
+export const onLogin = (form, navigate) => {
+    return async () => {
         try {
            const loginData = await sspApi.post('/user/login', form, {
                 headers: {
@@ -72,8 +71,7 @@ export const onLogin = (form) => {
                 icon: "success",
                 title: loginData.data.message
             });
-            dispacth(fetchGlobalData)
-            return loginData
+            navigate('/')
         } catch (err) {
             Swal.fire({
                 icon: "error",

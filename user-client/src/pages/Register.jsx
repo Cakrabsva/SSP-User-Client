@@ -3,8 +3,9 @@ import Swal from 'sweetalert2';
 import { User, Mail, KeyRound, RotateCcwKey, CircleArrowLeft, EyeOff, Eye } from "lucide-react"
 import { Link, useNavigate } from 'react-router-dom';
 import {  useState } from "react";
-import { useDispatch } from "react-redux";
-import { onRegister } from "../features/dispatch-function/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { onRegister } from "../features/dispatch-function/authSlices";
+import Loading from "../components/Loading";
 
 export default function Register () {
 
@@ -12,6 +13,7 @@ export default function Register () {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [eyePass, setEyePass] =useState(false)
     const [eyeConfirmPass, setEyeConfirmPass] =useState(false)
+    const isLoading = useSelector(state => state.auth.loading);
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -35,17 +37,16 @@ export default function Register () {
             })
             return
         }
-        const response = await dispatch(onRegister(form))
-        if(response) {
-            navigate('/login')
-        }
+        dispatch(onRegister({form, navigate}))
         setConfirmPassword('')
         setform(()=>({username:'', email:'', password:''}))
     }
 
-    // useEffect (()=> {
-        
-    // })
+     if(isLoading) {
+            return (
+                <Loading />
+            )
+        }
 
 
     return (

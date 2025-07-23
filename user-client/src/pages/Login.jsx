@@ -2,13 +2,15 @@ import "../index.css"
 import { User, KeyRound, CircleArrowLeft, Eye, EyeOff } from "lucide-react"
 import { Link, useNavigate} from 'react-router-dom';
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { onLogin } from "../features/dispatch-function/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { onLogin } from "../features/dispatch-function/authSlices";
+import Loading from "../components/Loading";
 
 export default function Login () {
 
     const [form, setForm] = useState({emailUsername:'', password:''})
     const [eye, setEye] = useState('')
+    const isLoading = useSelector(state => state.auth.loading);
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -20,11 +22,14 @@ export default function Login () {
     
     const handleOnLogin = async (e) => {
         e.preventDefault()
-        const response = await dispatch(onLogin(form))
-        if(response) {
-            navigate('/')
-        }
+        dispatch(onLogin({form, navigate}))
         setForm({emailUsername:'', password:''})
+    }
+
+    if(isLoading) {
+        return (
+            <Loading />
+        )
     }
 
     return (
