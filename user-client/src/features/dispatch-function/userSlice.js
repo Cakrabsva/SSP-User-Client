@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { sspApi } from "../../helpers/http-clients";
-// import { fetchGlobalData } from "../global-data/globalData";
 import Swal from 'sweetalert2';
+import { fetchGlobalData } from "../global-data/globalData";
 const userSlice = createSlice ({
     name: "user-slice",
     initialState: {},
@@ -44,7 +44,7 @@ export const onRegister = (form) => {
 }
 
 export const onLogin = (form) => {
-    return async () => {
+    return async (dispacth) => {
         try {
            const loginData = await sspApi.post('/user/login', form, {
                 headers: {
@@ -72,6 +72,7 @@ export const onLogin = (form) => {
                 icon: "success",
                 title: loginData.data.message
             });
+            dispacth(fetchGlobalData)
             return loginData
         } catch (err) {
             Swal.fire({
