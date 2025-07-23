@@ -2,6 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { sspApi } from '../../helpers/http-clients';
 import Swal from 'sweetalert2';
+import SweetAlert from '../../helpers/sweetAlert';
 
 export const onLogin = createAsyncThunk(
   'auth/onLogin',
@@ -16,11 +17,11 @@ export const onLogin = createAsyncThunk(
       localStorage.setItem('id', id);
       localStorage.setItem('first_name', first_name);
 
-      Swal.fire({ icon: 'success', title: res.data.message });
+      SweetAlert.successToast(res.data)
       navigate('/');
       return res.data;
     } catch (err) {
-      Swal.fire({ icon: 'error', title: 'Oops...', text: err.response?.data?.message });
+      SweetAlert.errorAlert(err);
       return thunkAPI.rejectWithValue(err.response?.data?.message);
     }
   }
@@ -34,7 +35,7 @@ export const onRegister = createAsyncThunk(
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       });
 
-      Swal.fire({ icon: 'success', title: res.data.message });
+      SweetAlert.successToast(res.data)
       navigate('/login');
       return res.data;
     } catch (err) {
