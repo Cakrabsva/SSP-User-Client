@@ -3,8 +3,18 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import PromotionSlider from "../components/PromotionCarousel";
 import PromotionHeader from "../components/PromotionHeader";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchGlobalData } from "../features/global-data/globalData";
 
 export default function Home () {
+
+    const dispatch = useDispatch()
+    
+    useEffect(()=>{
+        dispatch(fetchGlobalData)
+    }, [dispatch])
+
     return (
         <div 
             className="
