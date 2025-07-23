@@ -2,7 +2,7 @@ import "../index.css"
 import { CircleArrowLeft, Eye, EyeOff, KeyRound, Lock, RectangleEllipsis} from "lucide-react"
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { onResetPassword } from "../features/dispatch-function/userSlice";
 
 export default function ResetPassword () {
@@ -13,6 +13,8 @@ export default function ResetPassword () {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const params = useParams()
+    const id = params.id
 
     const handleOnChangeForm = (e) => {
         const {name, value} = e.target
@@ -21,9 +23,9 @@ export default function ResetPassword () {
 
     const handleOnSubmit = async (e) => {
         e.preventDefault()
-        const response = await dispatch(onResetPassword(form))
+        const response = await dispatch(onResetPassword(form,id))
         if(response) {
-            navigate('/')
+            navigate('/login')
         }
         setForm({newPassword:'',  confirmPassword:''})
     }

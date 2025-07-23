@@ -1,8 +1,30 @@
 import "../index.css"
 import { CircleArrowLeft, Mail } from "lucide-react"
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
+import { onForgotPassword } from "../features/dispatch-function/userSlice";
 
 export default function ForgotPassword () {
+
+    const [email, setEmail] = useState('')
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const handleOnChangeEmail = (e) => {
+        setEmail(e.target.value.replace(/\s/g, ''))
+    }
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault()
+        const respons = dispatch(onForgotPassword(email))
+        if(respons ) {
+            navigate("/login")
+        }
+        setEmail('')
+    }
+
     return (
         <div className="
             max-w-[411px] min-w-[375px] h-screen py-8
@@ -20,7 +42,8 @@ export default function ForgotPassword () {
                     <p className="text-gray-400 text-center font-semibold">Enter your Email account to reset your password</p>
                 </div>
                 <div>
-                    <form 
+                    <form
+                        onSubmit={handleOnSubmit} 
                         action=""
                         className="space-y-3 font-sans text-justify">
                         
@@ -30,11 +53,21 @@ export default function ForgotPassword () {
                             </div>
                             <input 
                                 type="email"
+                                id="email"
+                                name="email"
+                                value={email}
+                                onChange={handleOnChangeEmail}
                                 placeholder="Email"
+                                onKeyDown={(e) => {
+                                    if (e.key === ' ') e.preventDefault();
+                                }}
+                                    autoComplete="off"
+                                    required
                                 className="border border-gray-300 rounded-full bg-gray-100 w-full h-10 px-5 py-8 pl-10 text-gray-600"
                             />
                         </div>
-                        <button 
+                        <button
+                            type="submit" 
                             className="w-full text-center bg-yellow-400 font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
                             Reset Password
                         </button>

@@ -40,6 +40,8 @@ export default function DropdownMenu () {
                                 className='block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-200 duration-200 cursor-pointer h-10'
                                 onClick={() => {
                                     localStorage.removeItem('token');
+                                    localStorage.removeItem('id');
+                                    localStorage.removeItem('first_name');
                                     setIsDropdownOpen(false);
                                 }}
                             >

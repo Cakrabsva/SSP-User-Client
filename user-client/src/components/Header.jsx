@@ -10,9 +10,12 @@ export default function Header () {
     const isLogin = localStorage.getItem('token')
     let {user, isLoading} = useSelector(state => state.globalData)
     const dispatch = useDispatch()
-    useEffect(()=>{
-        dispatch(fetchGlobalData());
-    }, [dispatch])
+
+    useEffect(() => {
+        if (isLogin) {
+            dispatch(fetchGlobalData());
+        }
+    }, [dispatch, isLogin]);
 
     let userName = 'Loading...'
     let userAvatar = avatarReplacer

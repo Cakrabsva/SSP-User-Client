@@ -202,11 +202,48 @@ export const onUpdateUsername = (form) => {
     }
 }
 
+export const onForgotPassword = (email) => {
+    return async () => {
+        try {
+            const forgotPassData = await sspApi.post(`/user/forgot-password`, {email}, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                }
+            })
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: forgotPassData.data.message
+            });
+            localStorage.setItem('id', forgotPassData.data.id);
+            return forgotPassData
+        } catch(err) {
+            console.log(err)
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: err.response?.data?.message,
+                confirmButtonText: 'Oke',
+            })
+        }
+    }
+}
+
 export const onResetPassword = (form) => {
     return async () => {
         try {
             const userId = localStorage.getItem("id")
-
             const updateStatus = await sspApi.post(`/user/${userId}/reset-password`, form, {
                 headers: {
                     "Content-Type": 'application/x-www-form-urlencoded',
@@ -228,6 +265,7 @@ export const onResetPassword = (form) => {
                 icon: "success",
                 title: updateStatus.data.message
             });
+            localStorage.removeItem('id')
             return updateStatus
         } catch (err) {
             Swal.fire({
