@@ -10,12 +10,14 @@ export const onLogin = createAsyncThunk(
       const res = await sspApi.post('/user/login', form, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       });
-
       const { token, id, first_name } = res.data;
       localStorage.setItem('token', token);
       localStorage.setItem('id', id);
       localStorage.setItem('first_name', first_name);
 
+      await sspApi.post(`/user/${id}/update-token`, form, {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
       SweetAlert.successToast(res.data)
       navigate('/');
       return res.data;
