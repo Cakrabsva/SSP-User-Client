@@ -238,11 +238,11 @@ export const onForgotPassword = (email) => {
     }
 }
 
-export const onResetPassword = (form) => {
+export const onResetPassword = (form, id) => {
     return async () => {
         try {
-            const userId = localStorage.getItem("id")
-            const updateStatus = await sspApi.post(`/user/${userId}/reset-password`, form, {
+            console.log('masuuuk')
+            const updateStatus = await sspApi.post(`/user/${id}/reset-password`, form, {
                 headers: {
                     "Content-Type": 'application/x-www-form-urlencoded',
                 }

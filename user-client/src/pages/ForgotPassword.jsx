@@ -1,9 +1,10 @@
 import "../index.css"
 import { CircleArrowLeft, Mail } from "lucide-react"
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
-import { onForgotPassword } from "../features/dispatch-function/userSlice";
+import { onForgotPassword } from "../features/dispatch-function/passwordSlices";
+import Loading from "../components/Loading";
 
 export default function ForgotPassword () {
 
@@ -11,6 +12,7 @@ export default function ForgotPassword () {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const isLoading = useSelector(state => state.password.loading);
 
     const handleOnChangeEmail = (e) => {
         setEmail(e.target.value.replace(/\s/g, ''))
@@ -18,13 +20,15 @@ export default function ForgotPassword () {
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        const respons = dispatch(onForgotPassword(email))
-        if(respons ) {
-            navigate("/login")
-        }
+        dispatch(onForgotPassword({email, navigate}))
         setEmail('')
     }
 
+    if(isLoading) {
+        return (
+            <Loading />
+        )
+    }
     return (
         <div className="
             max-w-[411px] min-w-[375px] h-screen py-8

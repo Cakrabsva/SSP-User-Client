@@ -24,6 +24,25 @@ export const onUpdatePassword = createAsyncThunk(
     }
 )
 
+export const onForgotPassword = createAsyncThunk(
+    'password/onForgotPassword',
+    async ({email, navigate}, thunkAPI) => {
+        try {
+            const res = await sspApi.post(`/user/forgot-password`, {email}, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                }
+            })
+            SweetAlert.successToast(res.data)
+            localStorage.setItem('id', res.data.id);
+            navigate('/login');
+        } catch (err) {
+            SweetAlert.errorAlert(err);
+            return thunkAPI.rejectWithValue(err.response?.data?.message);
+        }
+    }
+)
+
 const passwordSlice = createSlice({
     name: 'password',
     initialState: {
@@ -39,6 +58,15 @@ const passwordSlice = createSlice({
                 state.loading =  false
             })
             .addCase(onUpdatePassword.rejected, (state)=> {
+                state.loading =  false
+            })
+            .addCase(onForgotPassword.pending, (state)=> {
+                state.loading =  true
+            })
+            .addCase(onForgotPassword.fulfilled, (state)=> {
+                state.loading =  false
+            })
+            .addCase(onForgotPassword.rejected, (state)=> {
                 state.loading =  false
             })
     }
