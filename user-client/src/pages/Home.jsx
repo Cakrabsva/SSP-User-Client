@@ -16,20 +16,20 @@ export default function Home () {
     }, [dispatch])
 
     return (
-        <div className="
-            max-w-[411px] min-w-[375px] h-screen pb-8
-            border border-gray-200 rounded-4xl shadow-lg
-            mx-auto 
-            bg-white
-            overflow-auto custom-scrollbar
-            relative">
-            <div className="sticky top-0 bg-white pt-8 pb-4 z-10">
+        <div className="">
+            <div className="sticky top-0 bg-white pt-6 pb-4 z-10">
                 <Header />
             </div>
             <div className="px-6 mt-4 space-y-3 z-0">
                 <PromotionHeader/>
                 <PromotionSlider />
-            
+                <PromotionSlider />
+                <PromotionSlider />
+                <PromotionSlider />
+                <PromotionSlider />
+                <PromotionSlider />
+                <PromotionSlider />
+                <PromotionSlider />
             </div>
             <div className="flex justify-center items-center mt-20">
                 <h1 className="font-semibold text-2xl">No data</h1>

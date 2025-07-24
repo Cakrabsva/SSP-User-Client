@@ -4,13 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function Settings () {
     return (
-        <div className="
-            max-w-[411px] min-w-[375px] h-screen py-8
-            border border-gray-200 rounded-4xl shadow-lg
-            mx-auto 
-            bg-white
-            relative">
-
+        <div className="pt-8">
             <div className="px-6">
                 <Link to='/'>
                     <CircleArrowLeft className="size-10 text-black hover:scale-105 transition-all duration-300 cursor-pointer" />

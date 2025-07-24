@@ -50,12 +50,7 @@ export default function Register () {
 
 
     return (
-        <div className="
-            max-w-[411px] min-w-[375px] h-screen py-8
-            border border-gray-200 rounded-4xl shadow-lg
-            mx-auto 
-            bg-yellow-400
-            relative">
+        <div className="pt-8">
             <div className="px-6">
                 <div className="flex justify-between items-center">
                     <Link to='/login-register'>
@@ -71,7 +66,7 @@ export default function Register () {
                     <p className="font-semibold">Jika kamu belum memiliki akun silahkan register dulu ya.</p>
                 </div>
             </div>
-            <div className="bg-white py-16 px-6 rounded-t-[48px] absolute bottom-0 inset-x-0">
+            <div className="bg-white py-16 px-6 rounded-b-[48px] absolute bottom-0 inset-x-0">
                 <form 
                     action=""
                     onSubmit={handleOnRegister}
@@ -156,7 +151,7 @@ export default function Register () {
                         </a>
                         
                     </div>
-                    <button type="submit" className="w-full text-center bg-black text-white font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
+                    <button type="submit" className="w-full text-center bg-yellow-500 text-black font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
                         Register</button>
                 </form>
             </div>

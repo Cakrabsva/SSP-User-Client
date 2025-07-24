@@ -5,12 +5,7 @@ import { CircleArrowLeft, HomeIcon } from "lucide-react";
 
 export default function LoginRegister () {
     return (
-        <div className="
-            max-w-[411px] min-w-[375px] h-screen py-8
-            border border-gray-200 rounded-4xl shadow-lg
-            mx-auto 
-            bg-white
-            relative">
+        <div className="pt-8">
             <div className="px-6">
                 <div className="flex justify-start items-center">
                     <Link to='/'>

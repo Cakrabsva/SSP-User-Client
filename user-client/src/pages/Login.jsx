@@ -33,12 +33,7 @@ export default function Login () {
     }
 
     return (
-        <div className="
-            max-w-[411px] min-w-[375px] h-screen py-8
-            border border-gray-200 rounded-4xl shadow-lg
-            mx-auto 
-            bg-yellow-400
-            relative">
+        <div className="pt-8">
             <div className="px-6">
                 <div className="flex justify-between items-center">
                     <Link to='/login-register'>
@@ -54,7 +49,7 @@ export default function Login () {
                     <p className="font-semibold">Silahkan login dulu kawan supaya kamu bisa menikmati semua fitur di aplikasi ini.</p>
                 </div>
             </div>
-            <div className="bg-white py-16 px-6 rounded-t-[48px] absolute bottom-0 inset-x-0">
+            <div className="py-16 px-6 rounded-b-[48px] absolute bottom-0 inset-x-0">
                 <form
                     onSubmit={handleOnLogin} 
                     action=""
@@ -104,7 +99,7 @@ export default function Login () {
                     <div className="flex justify-end">
                         <Link className="font-semibold hover:scale-105 hover:text-red-700 duration-300" to='/forgot-password'>Forgot Password?</Link>
                     </div>
-                    <button type="submit" className="w-full text-center bg-black text-white font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
+                    <button type="submit" className="w-full text-center bg-yellow-500 text-black font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 mt-8 cursor-pointer">
                     Login</button>
                 </form>
             </div>
