@@ -1,9 +1,10 @@
 import "../index.css"
 import { CircleArrowLeft, Eye, EyeOff, KeyRound, UserRoundPen } from "lucide-react"
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
-import { onUpdateUsername } from "../features/dispatch-function/userSlice";
+import { onUpdateUsername } from "../features/dispatch-function/userSlices";
+import Loading from "../components/Loading";
 
 export default function ChangeUsername () {
 
@@ -12,6 +13,7 @@ export default function ChangeUsername () {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const isLoading = useSelector(state => state.auth.loading);
 
     const handleOnChangeForm = (e) => {
         const {name, value} = e.target
@@ -20,11 +22,14 @@ export default function ChangeUsername () {
 
     const handleOnSubmitForm = async (e) => {
         e.preventDefault()
-        const response = await dispatch(onUpdateUsername(form))
-        if(response) {
-            navigate('/settings')
-        }
+        dispatch(onUpdateUsername({form, navigate}))
         setForm({newUsername:'', password:''})
+    }
+
+    if(isLoading) {
+        return (
+            <Loading />
+        )
     }
 
     return (

@@ -23,6 +23,28 @@ export const onUpdateEmail = createAsyncThunk (
     }
 )
 
+export const onUpdateUsername = createAsyncThunk (
+    'user/onUpdateUsername',
+    async ({form, navigate}, thunkAPI) => {
+        try {
+            const userId = localStorage.getItem("id")
+            const token = localStorage.getItem("token")
+
+            const res = await sspApi.post(`/user/${userId}/change-username`, form, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            SweetAlert.successToast(res.data)
+            navigate('/settings')
+        } catch (err) {
+            SweetAlert.errorAlert(err);
+            return thunkAPI.rejectWithValue(err.response?.data?.message);
+        }
+    }
+)
+
 const userSlice = createSlice({
     name:'user',
     initialState: {
@@ -38,6 +60,15 @@ const userSlice = createSlice({
                 state.loading = false;
             })
             .addCase(onUpdateEmail.rejected, (state) => {
+                state.loading = false;
+            })
+            .addCase(onUpdateUsername.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(onUpdateUsername.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(onUpdateUsername.rejected, (state) => {
                 state.loading = false;
             })
     }
