@@ -1,9 +1,10 @@
 import "../index.css"
 import { CircleArrowLeft, Eye, EyeOff, KeyRound, Lock, RectangleEllipsis} from "lucide-react"
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
-import { onUpdatePassword } from "../features/dispatch-function/userSlice";
+import { onUpdatePassword } from "../features/dispatch-function/passwordSlices";
+import Loading from "../components/Loading";
 
 export default function ChangePassword () {
 
@@ -14,6 +15,7 @@ export default function ChangePassword () {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const isLoading = useSelector(state => state.password.loading);
 
     const handleOnChangeForm = (e) => {
         const {name, value} = e.target
@@ -22,12 +24,14 @@ export default function ChangePassword () {
 
     const handleOnSubmit = async (e) => {
         e.preventDefault()
-
-       const response = await dispatch(onUpdatePassword(form))
-       if(response) {
-        navigate('/')
+        dispatch(onUpdatePassword({form, navigate}))
         setForm({oldPassword:'', newPassword:'', confirmPassword:''})
-       }
+    }
+
+    if(isLoading) {
+        return (
+            <Loading />
+        )
     }
 
     return (
@@ -105,6 +109,7 @@ export default function ChangePassword () {
                                 id="confirmPassword"
                                 name="confirmPassword"
                                 placeholder="Confirm Password"
+                                value={form.confirmPassword}
                                 onChange={handleOnChangeForm}
                                 onKeyDown={(e) => {
                                     if (e.key === ' ') e.preventDefault();
