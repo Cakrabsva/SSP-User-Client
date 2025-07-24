@@ -16,8 +16,7 @@ export default function Home () {
     }, [dispatch])
 
     return (
-        <div 
-            className="
+        <div className="
             max-w-[411px] min-w-[375px] h-screen pb-8
             border border-gray-200 rounded-4xl shadow-lg
             mx-auto 

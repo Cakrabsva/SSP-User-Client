@@ -1,9 +1,10 @@
 import "../index.css"
-import { CircleArrowLeft, Eye, EyeOff, KeyRound, Lock, RectangleEllipsis} from "lucide-react"
+import { CircleArrowLeft, Eye, EyeOff, KeyRound, RectangleEllipsis} from "lucide-react"
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { onResetPassword } from "../features/dispatch-function/userSlice";
+import { onResetPassword } from "../features/dispatch-function/passwordSlices";
+import Loading from "../components/Loading";
 
 export default function ResetPassword () {
 
@@ -13,6 +14,7 @@ export default function ResetPassword () {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const isLoading = useSelector(state => state.password.loading);
     const params = useParams()
     const id = params.id
 
@@ -21,13 +23,16 @@ export default function ResetPassword () {
         setForm((prev)=>({...prev, [name]:value.replace(/\s/g, '')}))
     }
 
-    const handleOnSubmit = async (e) => {
+    const handleOnSubmit = (e) => {
         e.preventDefault()
-        const response = await dispatch(onResetPassword(form,id))
-        if(response) {
-            navigate('/login')
-        }
+        dispatch(onResetPassword({form, id, navigate}))
         setForm({newPassword:'',  confirmPassword:''})
+    }
+
+    if(isLoading) {
+        return (
+            <Loading />
+        )
     }
 
     return (

@@ -34,9 +34,27 @@ export const onForgotPassword = createAsyncThunk(
                 }
             })
             SweetAlert.successToast(res.data)
-            localStorage.setItem('id', res.data.id);
             navigate('/login');
         } catch (err) {
+            SweetAlert.errorAlert(err);
+            return thunkAPI.rejectWithValue(err.response?.data?.message);
+        }
+    }
+)
+
+export const onResetPassword = createAsyncThunk(
+    'password/onResetPassword',
+    async ({form, id, navigate}, thunkAPI) => {
+        try {
+            const res = await sspApi.post(`/user/${id}/reset-password`, form, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                }
+            })
+
+            SweetAlert.successToast(res.data)
+            navigate('/login');
+        } catch(err) {
             SweetAlert.errorAlert(err);
             return thunkAPI.rejectWithValue(err.response?.data?.message);
         }
@@ -67,6 +85,15 @@ const passwordSlice = createSlice({
                 state.loading =  false
             })
             .addCase(onForgotPassword.rejected, (state)=> {
+                state.loading =  false
+            })
+            .addCase(onResetPassword.pending, (state)=> {
+                state.loading =  true
+            })
+            .addCase(onResetPassword.fulfilled, (state)=> {
+                state.loading =  false
+            })
+            .addCase(onResetPassword.rejected, (state)=> {
                 state.loading =  false
             })
     }
