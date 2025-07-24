@@ -1,7 +1,6 @@
 // redux/slices/authSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { sspApi } from '../../helpers/http-clients';
-import Swal from 'sweetalert2';
 import SweetAlert from '../../helpers/sweetAlert';
 
 export const onLogin = createAsyncThunk(
@@ -39,7 +38,7 @@ export const onRegister = createAsyncThunk(
       navigate('/login');
       return res.data;
     } catch (err) {
-      Swal.fire({ icon: 'error', title: 'Oops...', text: err.response?.data?.message });
+      SweetAlert.errorAlert(err);
       return thunkAPI.rejectWithValue(err.response?.data?.message);
     }
   }

@@ -1,9 +1,10 @@
 import "../index.css"
 import { CircleArrowLeft, Eye, EyeOff, KeyRound, Mail, RotateCcwKey, User } from "lucide-react"
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
-import { onUpdateEmail } from "../features/dispatch-function/userSlice";
+import { onUpdateEmail } from "../features/dispatch-function/userSlices";
+import Loading from "../components/Loading";
 
 export default function ChangeEmail () {
 
@@ -11,6 +12,7 @@ export default function ChangeEmail () {
     const [eye, setEye] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const isLoading = useSelector(state => state.user.loading);
 
     const handleOnChangeForm = (e) => {
         const {name, value} = e.target
@@ -19,15 +21,20 @@ export default function ChangeEmail () {
 
     const handleOnSubmit = async (e) => {
         e.preventDefault()
-        const response = await dispatch(onUpdateEmail(form))
+        const response = await dispatch(onUpdateEmail({form, navigate}))
         if(response) {
-            navigate('/settings')
             setForm({email:'', password:''})
             return
         } else {
             setForm({email:form.email, password:''})
         }
     }
+
+    if(isLoading) {
+            return (
+                <Loading />
+            )
+        }
 
     return (
         <div className="
