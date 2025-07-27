@@ -1,10 +1,17 @@
+import { useDispatch } from "react-redux";
 import "../index.css"
 import { useState } from "react";
+import { onEditProfile } from "../features/dispatch-function/profileSlice";
+import { useNavigate } from "react-router-dom";
+import MyDate from "../helpers/MyFunction";
 
 export default function FormEditProfile (props) {
 
     const {first_name, last_name, born_date, gender, bio} = props.userData.Profile
     const [form, setForm] = useState({first_name, last_name, born_date, gender, bio});
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleChangeForm = (e) => {
         const {name, value} = e.target
@@ -13,7 +20,7 @@ export default function FormEditProfile (props) {
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        console.log(form)
+        dispatch(onEditProfile({form, navigate}))
     }
 
     return (
@@ -58,7 +65,7 @@ export default function FormEditProfile (props) {
                                 type="date" 
                                 name="born_date" 
                                 id="born_date"
-                                value={form.born_date || ''}
+                                value={MyDate.formateDate(form.born_date)  || ''}
                                 onChange={handleChangeForm}
                                 className="border border-gray-300 rounded-lg w-46 h-10 px-3"/>
                         </div>
