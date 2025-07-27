@@ -28,7 +28,7 @@ export default function Navbar () {
                 </Link>
             </div>
             <div className="flex justify-center items-center hover:scale-110 duration-200">
-                <Link to="" className="font-semibold text-gray-600">
+                <Link to="/profile" className="font-semibold text-gray-600">
                     <User className="size-7 text-gray-500 justify-self-center" />
                     Profile
                 </Link>

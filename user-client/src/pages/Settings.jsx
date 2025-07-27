@@ -17,15 +17,6 @@ export default function Settings () {
                 </p>
             </div>
             <div>
-                <div className=" grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
-                    <div className="flex space-x-4">
-                        <UserRound className="size-7 text-gray-700" />
-                        <p className="font-semibold text-gray-700">Change Profile</p>
-                    </div>
-                    <div className="justify-items-end">
-                        <ChevronRight className="text-gray-700" />
-                    </div>
-                </div>
                 <Link to='/change-email'>
                     <div className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
                         <div className="flex space-x-4">
@@ -69,7 +60,7 @@ export default function Settings () {
                 <div className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
                     <div className="flex space-x-4">
                         <TriangleAlert className="size-7 text-gray-700" />
-                        <p className="font-semibold text-gray-700">Report a bug</p>
+                        <p className="font-semibold text-gray-700">Report bug</p>
                     </div>
                     <div className="justify-items-end">
                         <ChevronRight className="text-gray-700" />
