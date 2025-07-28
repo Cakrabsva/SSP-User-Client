@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import "../index.css"
 import { useState } from "react";
-import { onEditProfile } from "../features/dispatch-function/profileSlice";
+import { onEditProfile } from "../features/dispatch-function/profileSlices";
 import { useNavigate } from "react-router-dom";
 import MyDate from "../helpers/MyFunction";
 
@@ -65,7 +65,7 @@ export default function FormEditProfile (props) {
                                 type="date" 
                                 name="born_date" 
                                 id="born_date"
-                                value={MyDate.formateDate(form.born_date)  || ''}
+                                value={form.born_date ? MyDate.formateDate(form.born_date) : ''}
                                 onChange={handleChangeForm}
                                 className="border border-gray-300 rounded-lg w-46 h-10 px-3"/>
                         </div>

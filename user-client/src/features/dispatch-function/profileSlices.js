@@ -23,12 +23,35 @@ export const onEditProfile = createAsyncThunk(
     }
 )
 
+export const onUpdateAvatar = createAsyncThunk(
+    'profile/onUpdateAvatar',
+    async ({formData, navigate}, thunkAPI) => {
+        try{
+            const userId = localStorage.getItem("id")
+            const token = localStorage.getItem("token")
+            const res = await sspApi.patch(`/profile/${userId}/avatar-url`, formData, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            SweetAlert.successToast(res.data)
+            navigate('/edit-profile')
+            return res.data
+        } catch(err) {
+            SweetAlert.errorAlert(err);
+            return thunkAPI.rejectWithValue(err.response?.data?.message);
+        }
+    }
+)
+
 const profileSlice = createSlice({
-    name:'user',
+    name:'profile',
     initialState: {
         loading: false,
     },
-    reducers: {},
+    reducers: {
+    },
     extraReducers: (builder) => {
         builder 
             .addCase(onEditProfile.pending, (state) => {
@@ -38,6 +61,15 @@ const profileSlice = createSlice({
                 state.loading = false;
             })
             .addCase(onEditProfile.rejected, (state) => {
+                state.loading = false;
+            })
+            .addCase(onUpdateAvatar.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(onUpdateAvatar.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(onUpdateAvatar.rejected, (state) => {
                 state.loading = false;
             })
     }
