@@ -1,4 +1,4 @@
-import { ChevronRight, CircleArrowLeft, Headset, Mail, RectangleEllipsis, Send, TriangleAlert, UserRound, UserRoundPen } from "lucide-react";
+import { ChevronLeft, ChevronRight, CircleArrowLeft, Headset, Mail, RectangleEllipsis, Send, TriangleAlert, UserRound, UserRoundPen } from "lucide-react";
 import "../index.css"
 import { Link } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ export default function Settings () {
         <div className="pt-8">
             <div className="px-6">
                 <Link to='/'>
-                    <CircleArrowLeft className="size-10 text-black hover:scale-105 transition-all duration-300 cursor-pointer" />
+                    <ChevronLeft className="text-black hover:scale-105 transition-all duration-300 cursor-pointer" />
                 </Link>
                 <p className="mt-8 text-xl font-bold">
                     Settings

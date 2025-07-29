@@ -1,5 +1,5 @@
 import "../index.css"
-import { CircleArrowLeft, Eye, EyeOff, KeyRound, UserRoundPen } from "lucide-react"
+import { ChevronLeft, CircleArrowLeft, Eye, EyeOff, KeyRound, UserRoundPen } from "lucide-react"
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
@@ -36,7 +36,7 @@ export default function ChangeUsername () {
         <div className="pt-8">
             <div className="px-6">
                 <Link to='/settings'>
-                    <CircleArrowLeft className="size-10 text-black hover:scale-105 transition-all duration-300 cursor-pointer" />
+                    <ChevronLeft className="text-black hover:scale-105 transition-all duration-300 cursor-pointer" />
                 </Link>
                 <div className="justify-center mt-16 space-y-6">
                     <p className="text-2xl text-center font-bold">Change Username</p>
