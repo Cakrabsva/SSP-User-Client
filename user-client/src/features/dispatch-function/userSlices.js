@@ -45,6 +45,49 @@ export const onUpdateUsername = createAsyncThunk (
     }
 )
 
+export const onSendingVerifyEmail = createAsyncThunk (
+    'user/onSendingVerifyEmail',
+    async (email, thunkAPI) => {
+        try {
+            const userId = localStorage.getItem("id")
+            const token = localStorage.getItem("token")
+            const res = await sspApi.post(`/user/${userId}/verify-email`, {email}, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            SweetAlert.successToast(res.data)
+        } catch (err) {
+            console.log(err)
+            SweetAlert.errorAlert(err);
+            return thunkAPI.rejectWithValue(err.response?.data?.message);
+        }
+    }
+)
+
+export const onVerifyUser = createAsyncThunk (
+    'user/onVerifyUser',
+    async (navigate, thunkAPI) => {
+        try {
+            const userId = localStorage.getItem("id")
+            const token = localStorage.getItem("token")
+
+            const res = await sspApi.post(`/user/${userId}/verified`, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            SweetAlert.successToast(res.data)
+            navigate('/verify-user')
+        } catch (err) {
+            SweetAlert.errorAlert(err);
+            return thunkAPI.rejectWithValue(err.response?.data?.message);
+        }
+    }
+)
+
 const userSlice = createSlice({
     name:'user',
     initialState: {
@@ -69,6 +112,24 @@ const userSlice = createSlice({
                 state.loading = false;
             })
             .addCase(onUpdateUsername.rejected, (state) => {
+                state.loading = false;
+            })
+            .addCase(onVerifyUser.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(onVerifyUser.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(onVerifyUser.rejected, (state) => {
+                state.loading = false;
+            })
+            .addCase(onSendingVerifyEmail.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(onSendingVerifyEmail.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(onSendingVerifyEmail.rejected, (state) => {
                 state.loading = false;
             })
     }

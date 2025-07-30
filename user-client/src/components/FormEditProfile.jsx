@@ -83,17 +83,16 @@ export default function FormEditProfile (props) {
                                 </select>
                         </div>
                     </div>
-                
-                        <div>
-                            <label htmlFor="bio" className="font-semibold ml-1">Bio</label> <br />
-                            <textarea 
-                                name="bio" 
-                                id="bio"
-                                wrap="soft"
-                                value={form.bio || ''}
-                                onChange={handleChangeForm}
-                                className="border border-gray-300 rounded-lg w-full h-32 px-3 py-3 text-wrap"></textarea>
-                        </div>
+                    <div>
+                        <label htmlFor="bio" className="font-semibold ml-1">Bio</label> <br />
+                        <textarea 
+                            name="bio" 
+                            id="bio"
+                            wrap="soft"
+                            value={form.bio || ''}
+                            onChange={handleChangeForm}
+                            className="border border-gray-300 rounded-lg w-full h-32 px-3 py-3 text-wrap"></textarea>
+                    </div>
                     <div className="flex justify-end">
                         <button type="submit" className="rounded-full bg-yellow-300 hover:bg-yellow-400 cursor-pointer font-semibold py-3 px-8">Save</button>
                     </div>

@@ -1,6 +1,6 @@
 import "../index.css"
 import { Link } from 'react-router-dom';
-import {Settings, ChevronLeft, Mars, UserRound, ChevronRight, Heart, TicketsPlane, Venus, CircleQuestionMark, Award, Mail, MailWarning, BadgeCheck } from "lucide-react"
+import {Settings, ChevronLeft, Mars, UserRound, ChevronRight, Heart, TicketsPlane, Venus, CircleQuestionMark, Award, Mail, MailWarning, BadgeCheck, ShieldCheck, CircleAlert } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchGlobalData } from "../features/global-data/globalData";
@@ -48,7 +48,7 @@ export default function Profile () {
                     <div className="flex items-center space-x-2 font-semibold text-xl">
                         <p>{user.Profile.first_name}</p>
                         <p>{user.Profile.last_name}</p>
-                        {user.is_verified ? <BadgeCheck className="size-5"/> : <></> }
+                        {user.is_verified ? <BadgeCheck className="size-5 text-blue-500"/> : <></> }
                     </div>
 
                     {user.is_verified ? 
@@ -129,18 +129,15 @@ export default function Profile () {
                     <ChevronRight className="text-gray-400" />
                 </div>
             </div>
-            {user.is_verified ? 
-            <></>:
-            <div className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
+            <Link to='/verify-user' className="grid grid-cols-2 hover:bg-gray-100 duration-300 cursor-pointer w-full px-6 py-3">
                 <div className="flex space-x-4">
-                    <MailWarning className="size-6 text-yellow-400" />
-                    <p className="font-semibold text-yellow-400">Verify User !</p>
+                    <ShieldCheck className="size-6 text-gray-400" />
+                    <p className="font-semibold text-gray-700">Verify Account {!user.is_verified? <span className="font-bold size-10 text-yellow-400">!</span> :<></>}</p>
                 </div>
                 <div className="justify-items-end">
-                    <ChevronRight className="text-yellow-400" />
+                    <ChevronRight className="text-gray-400" />
                 </div>
-            </div>
-            }
+            </Link>
         </div>
     )
 }
