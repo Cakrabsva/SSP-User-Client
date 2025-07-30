@@ -12,7 +12,8 @@ export default function VerifyUser () {
 
     let {user, isLoading} = useSelector(state => state.globalData)
     const [sentEmailLoading, SetSentEmailLoading] = useState(false)
-    const [isCountDown, setCountDown] = useState(false)
+    const getCountdown = localStorage.getItem('countdown_end_time')
+    const [isCountDown, setCountDown] = useState(getCountdown)
     const dispatch = useDispatch()
 
     const handleOnVerifyUser = async () => {
