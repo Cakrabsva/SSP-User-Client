@@ -16,7 +16,7 @@ export default function VerifyEmail () {
         <div className="w-full h-full flex justify-center items-center">
             <div className="text-center space-y-8">
                 <p>Thank You for verify your email. plese hit confirm to continue!</p>
-                <Link to='/' onClick={handleOnVerifyEmail} className="bg-yellow-500 py-2 px-6 rounded-xl">Confirm</Link>
+                <Link onClick={handleOnVerifyEmail} className="bg-yellow-500 py-2 px-6 rounded-xl">Confirm</Link>
             </div>
         </div>
     )

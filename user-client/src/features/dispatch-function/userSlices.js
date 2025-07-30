@@ -72,7 +72,7 @@ export const onVerifyUser = createAsyncThunk (
         try {
             const userId = localStorage.getItem("id")
             const token = localStorage.getItem("token")
-
+            console.log(token)
             const res = await sspApi.post(`/user/${userId}/verified`, {
                 headers: {
                     "Content-Type": 'application/x-www-form-urlencoded',
