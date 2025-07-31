@@ -7,6 +7,7 @@ import { fetchGlobalData } from "../features/global-data/globalData";
 import { onSendingVerifyEmail } from "../features/dispatch-function/userSlices";
 import CountdownTimer from "../components/CountDownTimer";
 import Loading from "../components/Loading";
+import PageHeader from "../components/PageHeader";
 
 export default function VerifyUser () {
 
@@ -41,12 +42,9 @@ export default function VerifyUser () {
     return (
         <div className="pt-8">
             <div className="px-6">
-                <Link to='/profile'>
-                    <ChevronLeft className="text-black hover:scale-105 transition-all duration-300 cursor-pointer" />
-                </Link>
-                <div className="justify-center mt-16 space-y-6">
-                    <p className="text-2xl text-center font-bold">Verify Email</p>
-                    <p className="text-gray-400 text-center font-semibold">Please verify your email to get full access</p>
+                <PageHeader data={{header:'Verify Account', navigateTo:'/Profile'}}/>
+                <div className="justify-center mt-16">
+                    <p className="text-gray-400 text-center font-semibold">Please verify your Account to get full access</p>
                 </div>
                 <div className="mt-8">
                     <div className="flex justify-center items-center space-x-3">

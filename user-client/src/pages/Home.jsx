@@ -23,14 +23,11 @@ export default function Home () {
             <div className="px-6 mt-4 space-y-3 z-0">
                 <PromotionHeader/>
                 <PromotionSlider />
-           
             </div>
             <div className="flex justify-center items-center mt-20">
                 <h1 className="font-semibold text-2xl">No data</h1>
             </div>
-            <div className="flex justify-center">
-                <Navbar />
-            </div>
+            <Navbar data={{active:'Home'}}/>
         </div>
     )
 }

@@ -5,6 +5,7 @@ import { fetchGlobalData } from "../features/global-data/globalData";
 import Loading from "../components/Loading";
 import FormEditProfile from "../components/FormEditProfile";
 import UpdateAvatar from "../components/UpdateAvatar";
+import PageHeader from "../components/PageHeader";
 
 export default function EditProfile () {
 
@@ -23,6 +24,7 @@ export default function EditProfile () {
 
     return (
         <div className="pt-8 px-6">
+            <PageHeader data={{header:'Edit Profile', navigateTo:'/profile'}}/>
             <UpdateAvatar userData={user}/>
             <FormEditProfile userData={user}/>
         </div>

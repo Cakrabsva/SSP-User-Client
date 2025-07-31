@@ -31,40 +31,29 @@ export default function UpdateAvatar (props) {
         setLoading(false)
     })
     return (
-        <div>
-            <div className="grid grid-cols-3 mb-6">
-                <Link to="/profile">
-                    <ChevronLeft/>
-                </Link>
-                <p className="font-bold text-lg justify-self-center">
-                    Edit Profile
-                </p>
+        <div className="mb-12">
+            <div className="justify-items-center">
+                {loading ? (
+                    <div className="size-27 flex justify-center items-center">
+                        <Loader2 className="animate-spin w-12 h-12 text-blue-300" />
+                    </div>
+                ) : (
+                    avatarUrl ? 
+                        <img src={url} alt="avatar" className="rounded-full size-24 justify-self-center mb-3" /> 
+                        : 
+                        <img src={avatarReplacer} alt="avatar" className="rounded-full size-24 justify-self-center mb-3" />
+                )}
             </div>
-
-            <div className="mb-12">
-                <div className="justify-items-center">
-                    {loading ? (
-                        <div className="size-27 flex justify-center items-center">
-                            <Loader2 className="animate-spin w-12 h-12 text-blue-300" />
-                        </div>
-                    ) : (
-                        avatarUrl ? 
-                            <img src={url} alt="avatar" className="rounded-full size-24 justify-self-center mb-3" /> 
-                            : 
-                            <img src={avatarReplacer} alt="avatar" className="rounded-full size-24 justify-self-center mb-3" />
-                    )}
-                </div>
-                <div className="text-blue-700 font-semibold hover:text-blue-400 cursor-pointer text-center">
-                    <a onClick={handleClickChangeAvatar}>Change profile avatar</a>
-                </div>
-                <input
-                    type="file"
-                    ref={fileInputRef}
-                    style={{ display: 'none' }}
-                    onChange={handleFileChange}
-                    accept="image/*"
-                />
+            <div className="text-blue-700 font-semibold hover:text-blue-400 cursor-pointer text-center">
+                <a onClick={handleClickChangeAvatar}>Change profile avatar</a>
             </div>
+            <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+                accept="image/*"
+            />
         </div>
     )
 }

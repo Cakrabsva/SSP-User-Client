@@ -11,9 +11,11 @@ import ForgotPassword from "../pages/ForgotPassword"
 import ResetPassword from "../pages/ResetPassword"
 import Profile from "../pages/Profile"
 import EditProfile from "../pages/EditProfile"
-import VerifyUser from "../pages/VerifyUser"
-import Waiting from "../pages/VerifyEmail"
 import VerifyEmail from "../pages/VerifyEmail"
+import VerifyAccount from "../pages/VerifyAccount"
+import Trip from "../pages/Trip"
+import Store from "../pages/Store"
+import Message from "../pages/Message"
 
 const appRoutes = () => {
     return (
@@ -30,8 +32,11 @@ const appRoutes = () => {
             <Route path="/reset-password/:id" element={<ResetPassword/>} />
             <Route path="/profile" element={<Profile/>} />
             <Route path="/edit-profile" element={<EditProfile/>} />
-            <Route path="/verify-user" element={<VerifyUser/>} />
+            <Route path="/verify-account" element={<VerifyAccount/>} />
             <Route path="/verify-email/:id" element={<VerifyEmail/>} />
+            <Route path="/trip" element={<Trip/>} />
+            <Route path="/store" element={<Store/>} />
+            <Route path="/message" element={<Message/>} />
         </Routes>
     )
 }
