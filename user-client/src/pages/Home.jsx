@@ -2,10 +2,11 @@ import "../index.css"
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import PromotionSlider from "../components/PromotionCarousel";
-import PromotionHeader from "../components/PromotionHeader";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchGlobalData } from "../features/global-data/globalData";
+import BestDestinationSlider from "../components/BestDestinationCarousel";
+import BestProductSlider from "../components/BestProductCarousel";
 
 export default function Home () {
 
@@ -20,12 +21,10 @@ export default function Home () {
             <div className="sticky top-0 bg-white pt-6 pb-4 z-10">
                 <Header />
             </div>
-            <div className="px-6 mt-4 space-y-3 z-0">
-                <PromotionHeader/>
+            <div className="space-y-6 mb-28">
                 <PromotionSlider />
-            </div>
-            <div className="flex justify-center items-center mt-20">
-                <h1 className="font-semibold text-2xl">No data</h1>
+                <BestDestinationSlider />
+                <BestProductSlider/>
             </div>
             <Navbar data={{active:'Home'}}/>
         </div>

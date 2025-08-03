@@ -8,7 +8,7 @@ export default function Navbar (props) {
 
     return (
         <div className="flex justify-center">
-            <div className="h-24 bg-gray-100 grid grid-cols-5 justify-items-center content-center fixed bottom-8 rounded-4xl shadow-lg w-96">
+            <div className="h-24 bg-gray-100 grid grid-cols-5 justify-items-center content-center fixed bottom-3 rounded-4xl shadow-lg w-96">
                 {activePage === 'Trip' ? 
                     <div className="bg-yellow-300 size-14 flex justify-center items-center rounded-full shadow-md hover:scale-110 duration-200"> 
                         <Link to="/trip"><Plane className="size-8 text-gray-600" /></Link>
