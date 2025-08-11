@@ -4,6 +4,7 @@ import authReducer from "../features/dispatch-function/authSlices"
 import userReducer from "../features/dispatch-function/userSlices"
 import passwordReducer from "../features/dispatch-function/passwordSlices"
 import profileReducer from "../features/dispatch-function/passwordSlices"
+import openTripReducer from "../features/dispatch-function/openTripSlices"
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         auth: authReducer,
         user: userReducer,
         password: passwordReducer,
-        profile: profileReducer
+        profile: profileReducer,
+        openTrip: openTripReducer
     }
 })
