@@ -23,7 +23,7 @@ export default function EditProfile () {
     }
 
     return (
-        <div className="pt-8 px-6">
+        <div className="p-4">
             <PageHeader data={{header:'Edit Profile', navigateTo:'/profile'}}/>
             <UpdateAvatar userData={user}/>
             <FormEditProfile userData={user}/>

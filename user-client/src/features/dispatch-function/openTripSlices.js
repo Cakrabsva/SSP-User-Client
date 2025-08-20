@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sspApi } from "../../helpers/http-clients";
-import SweetAlert from "../../helpers/sweetAlert";
 
 export const onGetAllOpenTrips = createAsyncThunk(
     'openTrip/ongetAllOpenTrips',
@@ -20,12 +19,31 @@ export const onGetAllOpenTrips = createAsyncThunk(
         }
     }
 )
+export const onGetOpenTrip = createAsyncThunk(
+    'openTrip/onGetOpenTrip',
+    async (tripId,thunkAPI) => {
+        try {
+            const userId = localStorage.getItem("id")
+            const token = localStorage.getItem("token")
+            const res = await sspApi.get(`/opentrip/${userId}/${tripId}`, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return res.data
+        } catch (err) {
+            return thunkAPI.rejectWithValue(err.response?.data?.message);
+        }
+    }
+)
 
 
 const openTripSlice = createSlice({
-    name:'openTrips',
+    name:'openTrip',
     initialState: {
         openTrips: {},
+        openTrip:{},
         loading: true,
     },
     reducers: {
@@ -44,6 +62,16 @@ const openTripSlice = createSlice({
                 state.openTrips = action.payload
             })
             .addCase(onGetAllOpenTrips.rejected, (state) => {
+                state.loading = false;
+            })
+            .addCase(onGetOpenTrip.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(onGetOpenTrip.fulfilled, (state, action) => {
+                state.loading = false;
+                state.openTrip = action.payload
+            })
+            .addCase(onGetOpenTrip.rejected, (state) => {
                 state.loading = false;
             })
     }

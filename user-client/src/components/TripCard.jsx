@@ -2,7 +2,6 @@ import "../index.css"
 import { Calendar, MapPin, Star } from "lucide-react"
 
 export default function TripCard (props) {
-    console.log(props)
 
     return (
         <div className="flex items-center cursor-pointer rounded-xl bg-white drop-shadow-sm" key={props.data.id}>

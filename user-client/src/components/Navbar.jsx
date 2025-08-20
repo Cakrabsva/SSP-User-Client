@@ -11,10 +11,10 @@ export default function Navbar (props) {
             <div className="h-24 bg-gray-100 grid grid-cols-5 justify-items-center content-center fixed bottom-3 rounded-4xl shadow-lg w-96">
                 {activePage === 'Trip' ? 
                     <div className="bg-yellow-300 size-14 flex justify-center items-center rounded-full shadow-md hover:scale-110 duration-200"> 
-                        <Link to="/trip"><Plane className="size-8 text-gray-600" /></Link>
+                        <Link to="/trip-list"><Plane className="size-8 text-gray-600" /></Link>
                     </div>:
                     <div className="flex justify-center items-center hover:scale-110 duration-200">
-                        <Link to="/trip" className="font-semibold text-gray-600">
+                        <Link to="/trip-list" className="font-semibold text-gray-600">
                             <Plane className="size-7 text-gray-500 justify-self-center" />
                             Trip
                         </Link>

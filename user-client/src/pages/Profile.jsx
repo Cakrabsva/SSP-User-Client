@@ -27,7 +27,7 @@ export default function Profile () {
 
     return (
         <div>
-            <div className="pt-8 px-6">
+            <div className="p-4">
                 <PageHeader data={{ header: 'Profile', navigateTo:'/' }}/>
                 {!user.is_verified ? 
                     <div className="bg-yellow-200 text-center rounded mb-8">
