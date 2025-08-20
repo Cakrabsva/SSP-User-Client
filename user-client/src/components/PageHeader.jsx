@@ -9,7 +9,7 @@ export default function PageHeader (props) {
     const navigateTo = props.data.navigateTo
 
     return (
-        <div className="grid grid-cols-3 mb-6">
+        <div className="grid grid-cols-3 bg-white px-6 py-6">
             <Link to={navigateTo}>
                 <ChevronLeft/>
             </Link>
