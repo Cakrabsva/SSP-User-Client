@@ -20,7 +20,7 @@ export default function Home () {
     }, [dispatch])
 
     return (
-        <div className="p-4">
+        <div className="p-2">
             <div className="sticky top-0 bg-white pt-6 pb-4 z-10">
                 <Header />
             </div>

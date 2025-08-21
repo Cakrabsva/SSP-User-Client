@@ -26,7 +26,7 @@ export default function TripList () {
                         <Loader2 className="animate-spin w-12 h-12 text-blue-500" />
                     </div>
                 ):(
-                    <div className="space-y-8 px-3 mb-32">
+                    <div className="space-x-1 mb-32">
                             {openTripsData.openTrips.data.map((el) => (
                             <Link to={`/trip-detail/${el.id}`} key={el.id}>
                                 <TripCard  data={el} />

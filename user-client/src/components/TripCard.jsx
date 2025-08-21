@@ -4,7 +4,7 @@ import { Calendar, MapPin, Star } from "lucide-react"
 export default function TripCard (props) {
 
     return (
-        <div className="flex items-center cursor-pointer rounded-xl bg-white drop-shadow-sm" key={props.data.id}>
+        <div className="flex items-center cursor-pointer rounded-xl bg-white" key={props.data.id}>
             <img className="rounded-xl size-33" src={props.data.image_url} alt="" />
             <div className="p-3">
                 <p className="text-lg font-bold">{props.data.title}</p>
