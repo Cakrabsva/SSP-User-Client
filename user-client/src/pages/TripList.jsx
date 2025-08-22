@@ -17,8 +17,8 @@ export default function TripList () {
     }, [dispatch])
 
     return (
-        <div className="p-4">
-                <div className="sticky w-full top-0 pb-4 z-10">
+        <div className="">
+                <div className="sticky w-full top-0 p-4 z-10 bg-white">
                     <PageHeader data={{header: 'Trip', navigateTo:'/'}}/>
                 </div>
                 {openTripsData.loading ? (
@@ -26,13 +26,13 @@ export default function TripList () {
                         <Loader2 className="animate-spin w-12 h-12 text-blue-500" />
                     </div>
                 ):(
-                    <div className="space-x-1 mb-32">
-                            {openTripsData.openTrips.data.map((el) => (
+                    <div className="p-4 space-x-1 mb-32">
+                            {openTripsData.openTrips?.data && openTripsData.openTrips.data.map((el) => (
                             <Link to={`/trip-detail/${el.id}`} key={el.id}>
                                 <TripCard  data={el} />
                             </Link>
                             ))}
-                        </div>
+                    </div>
                 )
             }
                 <Navbar data={{active:'Trip'}}/>

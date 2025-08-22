@@ -4,15 +4,19 @@ import { useParams } from "react-router-dom";
 import { onGetOpenTrip } from "../features/dispatch-function/openTripSlices";
 import PageHeader from "../components/PageHeader";
 import { Loader2, MapPin, CalendarDays, Users, Wallet, Info, Star } from "lucide-react";
+import { onGetAllTripReviews } from "../features/dispatch-function/tripReviewSlices";
 
 export default function TripDetail () {
 
     const {id} = useParams()
     const dispatch = useDispatch()
     const { openTrip, loading, error } = useSelector(state => state.openTrip);
+    const { tripReviews } = useSelector(state => state.tripReviews);
+    const reviews = tripReviews?.data
 
     useEffect(()=>{ 
         dispatch(onGetOpenTrip(id))
+        dispatch(onGetAllTripReviews(id))
     }, [dispatch, id])
 
     if (loading) {
@@ -59,11 +63,45 @@ export default function TripDetail () {
                     </div>
                 </div>
 
-                <div className="space-y-5 text-gray-700 bg-gray-50 p-4 rounded-lg pb-29">
+                <div className="space-y-5 text-gray-700 bg-gray-50 p-4 rounded-lg">
                     <div className="flex items-start"><CalendarDays className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-blue-500" /><div><p className="font-semibold">Duration</p><p>{`${trip.duration_days} Days ${trip.duration_nights} Nights`}</p></div></div>
                     <div className="flex items-start"><Users className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-green-500" /><div><p className="font-semibold">Quota</p><p>{trip.available_slots} people</p></div></div>
                     <div className="flex items-start"><Wallet className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-yellow-500" /><div><p className="font-semibold">Price</p><p>{formattedPrice}</p></div></div>
                     <div className="flex items-start"><Info className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-purple-500" /><div><p className="font-semibold">Description</p><p className="text-justify leading-relaxed">{trip.description}</p></div></div>
+                </div>
+
+                <div className="mt-8">
+                    <h2 className="text-2xl font-bold mb-4 text-gray-800">Reviews & Ratings</h2>
+                    {reviews && reviews.length > 0 ? (
+                        <div className="space-y-1">
+                            {reviews.map((review) => (
+                                <div key={review.id} className="bg-gray-50 p-4 rounded-lg">
+                                    <div className="flex items-center mb-2">
+                                        {review.User?.Profile?.avatar ? (
+                                            <img 
+                                                src={review.User.Profile.avatar} 
+                                                alt={review.User?.Profile?.first_name} 
+                                                className="w-8 h-8 rounded-full mr-3 object-cover" 
+                                            />
+                                        ) : (
+                                            <div className="w-8 h-8 rounded-full mr-3 bg-gray-300 flex items-center justify-center text-gray-600 font-bold">
+                                                {review.User?.Profile?.first_name?.charAt(0).toUpperCase() || '?'}
+                                            </div>
+                                        )}
+                                        <p className="font-semibold text-gray-800">{review.User?.Profile?.first_name || 'Anonymous'}</p>
+                                    </div>
+                                    <div className="flex items-center mb-2">
+                                        {[...Array(5)].map((_, i) => (
+                                            <Star key={i} className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
+                                        ))}
+                                    </div>
+                                    <p className="text-gray-600 text-sm">{review.review_text}</p>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-gray-500 mt-4">No reviews for this trip yet.</p>
+                    )}
                 </div>
             </div>
 
