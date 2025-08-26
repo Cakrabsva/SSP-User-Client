@@ -1,23 +1,76 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 import { onGetOpenTrip } from "../features/dispatch-function/openTripSlices";
 import PageHeader from "../components/PageHeader";
 import { Loader2, MapPin, CalendarDays, Users, Wallet, Info, Star } from "lucide-react";
 import { onGetAllTripReviews } from "../features/dispatch-function/tripReviewSlices";
+import { onGetAllTripDates } from "../features/dispatch-function/tripDateSlices";
 
 export default function TripDetail () {
 
+    const navigate = useNavigate()
     const {id} = useParams()
     const dispatch = useDispatch()
     const { openTrip, loading, error } = useSelector(state => state.openTrip);
     const { tripReviews } = useSelector(state => state.tripReviews);
+    const { tripDates } = useSelector(state => state.tripDates)
     const reviews = tripReviews?.data
 
     useEffect(()=>{ 
         dispatch(onGetOpenTrip(id))
         dispatch(onGetAllTripReviews(id))
+        dispatch(onGetAllTripDates(id))
     }, [dispatch, id])
+
+    const handleBookNow = () => {
+        if (!tripDates?.data || tripDates.data.length === 0) {
+            Swal.fire({
+                icon: 'info',
+                title: 'No Available Dates',
+                text: 'There are no available dates for this trip at the moment. Please check back later.',
+                width: '25rem',
+            });
+            return;
+        }
+
+        const dateOptions = tripDates.data.reduce((options, date) => {
+            const departure = new Date(date.departure_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            const arrival = new Date(date.return_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            options[date.id] = `${departure} to ${arrival}`;
+            return options;
+        }, {});
+
+        Swal.fire({
+            title: 'Select a Date',
+            input: 'select',
+            inputOptions: dateOptions,
+            inputPlaceholder: 'Choose your preferred date',
+            showCancelButton: true,
+            confirmButtonText: 'Continue to Book',
+            confirmButtonColor: '#facc15', // Tailwind yellow-400
+            width: '25rem',
+            cancelButtonText: 'Cancel',
+            preConfirm: (tripDateId) => {
+                if (!tripDateId) {
+                    Swal.showValidationMessage(`Please select a date`);
+                }
+                return tripDateId;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const selectedDate = dateOptions[result.value];
+                Swal.fire({
+                    title: 'Date Selected!',
+                    html: `You have selected the trip on:<br><b>${selectedDate}</b><br><br>You will be redirected to payment shortly.`,
+                    icon: 'success',
+                    confirmButtonColor: '#facc15',
+                    width: '25rem',
+                }).then(() => navigate(`/booking/${openTrip.data.id}?dateId=${result.value}`)) // jika ingin update booking coba untuk dispatch disini
+            }
+        });
+    };
 
     if (loading) {
         return (
@@ -106,7 +159,7 @@ export default function TripDetail () {
             </div>
 
             <div className="left-0 right-0 bg-white p-4 border-t border-gray-200 shadow-lg pb-10 sticky w-full bottom-0 p-4 z-10 bg-white">
-                <button className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer">
+                <button onClick={handleBookNow} className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer">
                     Book Now
                 </button>
             </div>
