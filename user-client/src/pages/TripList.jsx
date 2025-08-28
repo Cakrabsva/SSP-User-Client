@@ -19,7 +19,7 @@ export default function TripList () {
     return (
         <div className="">
                 <div className="sticky w-full top-0 p-4 z-10 bg-white">
-                    <PageHeader data={{header: 'Trip', navigateTo:'/'}}/>
+                    <PageHeader data={{header: 'Trip', navigateTo:'/', myTrip:'true'}}/>
                 </div>
                 {openTripsData.loading ? (
                     <div className="flex justify-center items-center p-6">

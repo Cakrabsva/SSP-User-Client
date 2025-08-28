@@ -7,6 +7,7 @@ import profileReducer from "../features/dispatch-function/passwordSlices"
 import openTripReducer from "../features/dispatch-function/openTripSlices"
 import tripReviewsReducer from "../features/dispatch-function/tripReviewSlices"
 import tripDatesReducer from "../features/dispatch-function/tripDateSlices"
+import tripBookingsReducer from "../features/dispatch-function/tripBookingSlices"
 
 export const store = configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
         profile: profileReducer,
         openTrip: openTripReducer,
         tripReviews: tripReviewsReducer,
-        tripDates: tripDatesReducer
+        tripDates: tripDatesReducer,
+        tripBookings: tripBookingsReducer,
     }
 })

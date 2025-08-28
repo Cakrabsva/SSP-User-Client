@@ -17,6 +17,7 @@ import TripList from "../pages/TripList"
 import Store from "../pages/Store"
 import Message from "../pages/Message"
 import TripDetail from "../pages/TripDetail"
+import MyBookingTrips from "../pages/MyBookingTrip"
 
 const appRoutes = () => {
     return (
@@ -39,6 +40,7 @@ const appRoutes = () => {
             <Route path="/store" element={<Store/>} />
             <Route path="/message" element={<Message/>} />
             <Route path="/trip-detail/:id" element={<TripDetail/>} />
+            <Route path="/my-booking-trips" element={<MyBookingTrips/>} />
         </Routes>
     )
 }

@@ -7,12 +7,13 @@ import PageHeader from "../components/PageHeader";
 import { Loader2, MapPin, CalendarDays, Users, Wallet, Info, Star } from "lucide-react";
 import { onGetAllTripReviews } from "../features/dispatch-function/tripReviewSlices";
 import { onGetAllTripDates } from "../features/dispatch-function/tripDateSlices";
+import { onCreateTripBooking } from "../features/dispatch-function/tripBookingSlices";
 
 export default function TripDetail () {
 
     const navigate = useNavigate()
-    const {id} = useParams()
     const dispatch = useDispatch()
+    const {id} = useParams()
     const { openTrip, loading, error } = useSelector(state => state.openTrip);
     const { tripReviews } = useSelector(state => state.tripReviews);
     const { tripDates } = useSelector(state => state.tripDates)
@@ -23,6 +24,10 @@ export default function TripDetail () {
         dispatch(onGetAllTripReviews(id))
         dispatch(onGetAllTripDates(id))
     }, [dispatch, id])
+
+    const handleOnsubmitTripdate = (TripDateId) => {
+        dispatch(onCreateTripBooking({ OpenTripId: id, TripDateId }));
+    }
 
     const handleBookNow = () => {
         if (!tripDates?.data || tripDates.data.length === 0) {
@@ -67,7 +72,10 @@ export default function TripDetail () {
                     icon: 'success',
                     confirmButtonColor: '#facc15',
                     width: '25rem',
-                }).then(() => navigate(`/booking/${openTrip.data.id}?dateId=${result.value}`)) // jika ingin update booking coba untuk dispatch disini
+                }).then(() =>
+                    handleOnsubmitTripdate(result.value),
+                    navigate(`/my-booking-trips`),
+                ) // jika ingin update booking coba untuk dispatch disini
             }
         });
     };
