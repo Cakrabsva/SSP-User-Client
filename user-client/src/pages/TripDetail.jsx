@@ -1,32 +1,43 @@
+import Swal from 'sweetalert2';
+import PageHeader from "../components/PageHeader";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2';
 import { onGetOpenTrip } from "../features/dispatch-function/openTripSlices";
-import PageHeader from "../components/PageHeader";
-import { Loader2, MapPin, CalendarDays, Users, Wallet, Info, Star } from "lucide-react";
+import { Loader2, MapPin, CalendarDays, Users, Wallet, Info, Star, Clock } from "lucide-react";
 import { onGetAllTripReviews } from "../features/dispatch-function/tripReviewSlices";
 import { onGetAllTripDates } from "../features/dispatch-function/tripDateSlices";
-import { onCreateTripBooking } from "../features/dispatch-function/tripBookingSlices";
+import { onCreateTripBooking, onGetAllTripBookings, onGetOpenTripBookings } from "../features/dispatch-function/tripBookingSlices";
+import MyDate from '../helpers/MyFunction';
 
 export default function TripDetail () {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {id} = useParams()
+    const {id, OpenTripId} = useParams()
     const { openTrip, loading, error } = useSelector(state => state.openTrip);
     const { tripReviews } = useSelector(state => state.tripReviews);
     const { tripDates } = useSelector(state => state.tripDates)
+    const { openTripBookings} = useSelector(state => state.tripBookings)
     const reviews = tripReviews?.data
 
     useEffect(()=>{ 
         dispatch(onGetOpenTrip(id))
         dispatch(onGetAllTripReviews(id))
         dispatch(onGetAllTripDates(id))
+        dispatch(onGetAllTripBookings(id))
+        dispatch(onGetOpenTripBookings({OpenTripId:id}))
     }, [dispatch, id])
 
-    const handleOnsubmitTripdate = (TripDateId) => {
-        dispatch(onCreateTripBooking({ OpenTripId: id, TripDateId }));
+    const handleOnsubmitTripdate = async (TripDateId) => {
+        await dispatch(onCreateTripBooking({ OpenTripId: id, TripDateId }));
+        navigate(`/my-booking-trips`);
+    }
+
+    const handleTotalGuest = (id) => {
+        const pendingCount = openTripBookings.data.filter(item => item.TripDateId === id).length
+        return pendingCount
+
     }
 
     const handleBookNow = () => {
@@ -71,10 +82,10 @@ export default function TripDetail () {
                     html: `You have selected the trip on:<br><b>${selectedDate}</b><br><br>You will be redirected to payment shortly.`,
                     icon: 'success',
                     confirmButtonColor: '#facc15',
+                    // showConfirmButton: false,
                     width: '25rem',
                 }).then(() =>
                     handleOnsubmitTripdate(result.value),
-                    navigate(`/my-booking-trips`),
                 ) // jika ingin update booking coba untuk dispatch disini
             }
         });
@@ -125,10 +136,25 @@ export default function TripDetail () {
                 </div>
 
                 <div className="space-y-5 text-gray-700 bg-gray-50 p-4 rounded-lg">
-                    <div className="flex items-start"><CalendarDays className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-blue-500" /><div><p className="font-semibold">Duration</p><p>{`${trip.duration_days} Days ${trip.duration_nights} Nights`}</p></div></div>
+                    <div className="flex items-start"><Clock className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-blue-500" /><div><p className="font-semibold">Duration</p><p>{`${trip.duration_days} Days ${trip.duration_nights} Nights`}</p></div></div>
                     <div className="flex items-start"><Users className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-green-500" /><div><p className="font-semibold">Quota</p><p>{trip.available_slots} people</p></div></div>
                     <div className="flex items-start"><Wallet className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-yellow-500" /><div><p className="font-semibold">Price</p><p>{formattedPrice}</p></div></div>
                     <div className="flex items-start"><Info className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-purple-500" /><div><p className="font-semibold">Description</p><p className="text-justify leading-relaxed">{trip.description}</p></div></div>
+                    <div className="flex items-start">
+                        <CalendarDays className="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-blue-500" />
+                        <div>
+                            <p className="font-semibold">Departure - Return Date:</p>
+                            {tripDates.data && tripDates.data.length > 0 ? (
+                                tripDates.data.map((dates) => (
+                                    <p key={dates.id}>
+                                        {`${MyDate.formatDate(dates.departure_date)} - ${MyDate.formatDate(dates.return_date)} ${handleTotalGuest(dates.id)}/${dates.quota}`}
+                                    </p>
+                                ))
+                            ) : (
+                                <p>No available dates.</p>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 <div className="mt-8">

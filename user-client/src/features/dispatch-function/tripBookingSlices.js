@@ -20,6 +20,25 @@ export const onGetAllTripBookings = createAsyncThunk(
     }
 )
 
+export const onGetOpenTripBookings = createAsyncThunk(
+    'tripBookings/onGetOpenTripBookings',
+    async ({OpenTripId}, thunkAPI) => {
+        try {
+            const userId = localStorage.getItem("id")
+            const token = localStorage.getItem("token")
+            const res = await sspApi.get(`/tripbooking/${userId}/${OpenTripId}/get-opentripbookings`, {
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return res.data
+        } catch (err) {
+            return thunkAPI.rejectWithValue(err.response?.data?.message);
+        }
+    }
+)
+
 export const onCreateTripBooking = createAsyncThunk(
     'tripBookings/onCreateTripBooking',
     async ({OpenTripId, TripDateId}, thunkAPI) => {
@@ -47,6 +66,7 @@ const tripBookingSlice = createSlice({
     name:'tripBookings',
     initialState: {
         tripBookings: {},
+        openTripBookings: {},
         loading: true,
     },
     reducers: {
@@ -65,6 +85,16 @@ const tripBookingSlice = createSlice({
                 state.tripBookings = action.payload
             })
             .addCase(onGetAllTripBookings.rejected, (state) => {
+                state.loading = false;
+            })
+            .addCase(onGetOpenTripBookings.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(onGetOpenTripBookings.fulfilled, (state, action) => {
+                state.loading = false;
+                state.openTripBookings = action.payload
+            })
+            .addCase(onGetOpenTripBookings.rejected, (state) => {
                 state.loading = false;
             })
             .addCase(onCreateTripBooking.pending, (state) => {

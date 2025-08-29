@@ -43,11 +43,11 @@ export default function MyBookingTrips () {
                     <div className="space-y-6">
                         {tripBookings.data.map(booking => (
                             <div key={booking.id} className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row hover:shadow-xl transition-shadow duration-300">
-                                <img 
+                                {/* <img 
                                     src={booking.OpenTrip.image_url} 
                                     alt={booking.OpenTrip.title} 
                                     className="w-full md:w-48 h-48 object-cover"
-                                />
+                                /> */}
                                 <div className="p-5 flex flex-col flex-grow justify-between">
                                     <div>
                                         <h3 className="text-2xl font-bold text-gray-800">{booking.OpenTrip.title}</h3>
