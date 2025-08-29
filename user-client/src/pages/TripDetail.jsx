@@ -35,7 +35,7 @@ export default function TripDetail () {
     }
 
     const handleTotalGuest = (id) => {
-        const pendingCount = openTripBookings.data.filter(item => item.TripDateId === id).length
+        const pendingCount = openTripBookings.data?.filter(item => item.TripDateId === id).length
         return pendingCount
 
     }
